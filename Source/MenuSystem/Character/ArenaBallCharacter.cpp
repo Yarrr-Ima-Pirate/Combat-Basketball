@@ -15,6 +15,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "MenuSystem/ArenaComponents/CombatComponent.h"
+#include "MenuSystem/ArenaComponents/BuffComponent.h"
 #include "MenuSystem/Weapon/Weapon.h"
 #include "Net/UnrealNetwork.h"
 #include "MenuSystem/MenuSystem.h"
@@ -46,6 +47,9 @@ AArenaBallCharacter::AArenaBallCharacter()
 
 	Combat = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
 	Combat->SetIsReplicated(true);
+
+	Buff = CreateDefaultSubobject<UBuffComponent>(TEXT("BuffComponent"));
+	Buff->SetIsReplicated(true);
 
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
@@ -122,6 +126,10 @@ void AArenaBallCharacter::PostInitializeComponents()
 	if (Combat)
 	{
 		Combat->Character = this;
+	}
+	if (Buff)
+	{
+		Buff->Character = this;
 	}
 }
 
