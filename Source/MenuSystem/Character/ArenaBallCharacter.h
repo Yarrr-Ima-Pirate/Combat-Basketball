@@ -41,6 +41,8 @@ public:
 
 	UPROPERTY(Replicated)
 	bool bDisableGameplay = false;
+
+	void UpdateHudHealth();
 protected:
 	virtual void PossessedBy(AController* NewController) override;
 	virtual void BeginPlay() override;
@@ -99,7 +101,6 @@ protected:
 
 	UFUNCTION()
 	void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
-	void UpdateHudHealth();
 	// Poll for any relevant classes and init the hud.
 	void PollInit();
 	
@@ -176,7 +177,7 @@ private:
 	float Health = 100.f;
 	
 	UFUNCTION()
-	void OnRep_Health();
+	void OnRep_Health(float LastHealth);
 
 	UPROPERTY()
 	class AArenaPlayerController* ArenaPlayerController;
@@ -248,10 +249,12 @@ public:
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	FORCEINLINE bool IsElimmed() const { return bElimmed; }
 	FORCEINLINE float GetHealth() const { return Health; }
+	FORCEINLINE void SetHealth(float Amount) { Health = Amount; }
 	FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 	FORCEINLINE UCombatComponent* GetCombat() const { return Combat; }
 	FORCEINLINE bool GetDisableGameplay() const { return bDisableGameplay; }
-	FORCEINLINE UStaticMeshComponent* GetAttachedBall() const {return AttachedBall; } 
+	FORCEINLINE UStaticMeshComponent* GetAttachedBall() const {return AttachedBall; }
+	FORCEINLINE UBuffComponent* GetBuff() const { return Buff; }
 	
 	ECombatState GetCombatState() const;
 

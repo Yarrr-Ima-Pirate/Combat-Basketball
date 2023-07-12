@@ -547,10 +547,13 @@ void AArenaBallCharacter::HideCameraIfCharacterClose()
 	}
 }
 
-void AArenaBallCharacter::OnRep_Health()
+void AArenaBallCharacter::OnRep_Health(float LastHealth)
 {
 	UpdateHudHealth();
-	PlayHitReactMontage();
+	if (Health < LastHealth)
+	{
+		PlayHitReactMontage();
+	}
 }
 
 void AArenaBallCharacter::UpdateHudHealth()
